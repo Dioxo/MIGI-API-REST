@@ -1,6 +1,6 @@
 #ignore configs
-./config
+config/
 #ignore dist
-./dist
+dist/
 #ignore node_modules
-./node_modules
+node_modules/
