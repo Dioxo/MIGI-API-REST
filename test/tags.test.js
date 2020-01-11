@@ -14,7 +14,6 @@ describe('Tags API TEST', () =>{
          * */
         const res = response.body.body;
         expect(res).to.be.an.instanceOf(Array);
-        expect(res).to.have.lengthOf(1);
         expect(res[0]).to.have.property('id_user', 0);
     });
 
