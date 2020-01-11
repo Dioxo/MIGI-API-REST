@@ -32,9 +32,9 @@ describe('Tags API TEST', () =>{
         expect(response.status).to.equal(200);
 
         expect(response.body.body).to.be.an.instanceOf(Object);
-        expect(response.body.body).has.property('id_tag');
-        expect(response.body.body).has.property('text_tag');
-        expect(response.body.body).has.property('color_tag');
+        expect(response.body.body).has.property('idTag');
+        expect(response.body.body).has.property('textTag');
+        expect(response.body.body).has.property('colorTag');
     })
 
 });

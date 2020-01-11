@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const response = require('../../response');
 const errors = require('../../errors');
-const controller = require('./controller');
+const store = require('./store');
 
 
 router.get('/', async (req, res, next) => {
@@ -11,10 +11,26 @@ router.get('/', async (req, res, next) => {
         return response.error(res, errors[0]);
     }
 
-    let result = await controller.getTags(req.query.idUser);
+    let result = await store.getTags(req.query.idUser);
 
-    response.success(res, result, 200);
+    response.success(res, result);
 });
 
+router.post('/', async (req, res, next) => {
+    if (!req.query.idUser || !req.query.textTag || !req.query.colorTag){
+        return response.error(res, errors[0]);
+    }
+
+    const tag = {
+        idUser : req.query.idUser,
+        textTag : req.query.textTag,
+        colorTag : req.query.colorTag
+    };
+
+    let result = await store.createTag(tag);
+
+    response.success(res, result)
+
+});
 
 module.exports = router;

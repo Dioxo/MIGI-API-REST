@@ -9,9 +9,11 @@ function getTags(idUser) {
         connection.query(sql, [idUser], (err, result) =>{
             if (err)
                 reject (err);
+            //return result data
             resolve(result);
         })
     }). then(rows => {
+        //return all the rows from the query
         return rows;
     }).catch( (err) => {
         //error handling...
@@ -20,6 +22,27 @@ function getTags(idUser) {
     });
 }
 
+function createTag(tag){
+    return new Promise((resolve, reject) => {
+        const sql = 'INSERT INTO tag (id_user, text_tag, color_tag) VALUES ( ? , ? , ?)';
+
+        connection.query(sql, [tag.idUser, tag.textTag, tag.colorTag], (err, result) => {
+            if (err)
+                reject(err);
+
+            //associate tag to its id
+            tag.idTag = result.insertId;
+            resolve(tag);
+        })
+    }).then(data => {
+        return data;
+    }).catch(reason => {
+        debug(reason);
+        return {};
+    })
+}
+
 module.exports = {
     getTags,
+    createTag,
 };
