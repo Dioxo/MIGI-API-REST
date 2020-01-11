@@ -5,6 +5,6 @@
 module.exports = [
     {
         errorId: 0,
-        message: 'There\'s no idUser in the query',
+        message: 'The query doesn\'t contains all the params',
     }
 ];
