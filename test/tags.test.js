@@ -26,15 +26,21 @@ describe('Tags API TEST', () =>{
         expect(response.body.error.errorId).to.equal(0);
     });
 
-    it('Post /api/tags?idUser&textTag&colorTag, Create a new tag when the query is well based' , async () => {
-        const response = await request(server).post('/api/tags?idUser=0&textTag=TEST_TAG&colorTag=F4F4F4');
+    it('Post /api/tags - Create a new tag when the query is well based' , async () => {
+        const tag = {
+            idUser : 0,
+            textTag : 'TEST_TAG',
+            colorTag : 'F4F4F4'
+        };
+
+        const response = await request(server).post('/api/tags').send(tag);
         expect(response.status).to.equal(200);
 
         expect(response.body.body).to.be.an.instanceOf(Object);
         expect(response.body.body).has.property('idTag');
         expect(response.body.body).has.property('textTag');
         expect(response.body.body).has.property('colorTag');
-    })
+    });
 
 });
 

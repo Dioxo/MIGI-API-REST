@@ -17,14 +17,16 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
-    if (!req.query.idUser || !req.query.textTag || !req.query.colorTag){
+    if ( ! (req.body.hasOwnProperty('idUser'))  ||
+        ! (req.body.hasOwnProperty('textTag')) ||
+        ! (req.body.hasOwnProperty('colorTag')) ){
         return response.error(res, errors[0]);
     }
 
     const tag = {
-        idUser : req.query.idUser,
-        textTag : req.query.textTag,
-        colorTag : req.query.colorTag
+        idUser : req.body.idUser,
+        textTag : req.body.textTag,
+        colorTag : req.body.colorTag
     };
 
     let result = await store.createTag(tag);
