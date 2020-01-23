@@ -2,7 +2,7 @@ const connection = require('../../db_connect');
 
 function getNotes(idUser) {
     return new Promise((resolve, reject) => {
-        const sql = 'SELECT * FROM note WHERE id_user = ?';
+        const sql = 'SELECT id_note,title,description,have_revision FROM note WHERE id_user = ?';
 
         connection.query(sql, [idUser], (err, result) =>{
             if (err)

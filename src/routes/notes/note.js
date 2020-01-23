@@ -7,12 +7,18 @@ const store = require('./store');
 const debug =require('debug')('server:debug');
 
 router.get('/' , async (req, res) => {
-    try {
-        let result = await store.getNotes(req.query.idUser);
-        response.success(res, result);
-    }catch (err) {
-        debug(err);
+    if (req.query.hasOwnProperty('idUser')){
+        try {
+            let result = await store.getNotes(req.query.idUser);
+            response.success(res, result);
+        }catch (err) {
+            debug(err);
+        }
+    }else{
+        response.error(res, errors[0]);
     }
+
+
 
 });
 

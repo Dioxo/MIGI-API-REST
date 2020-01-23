@@ -23,5 +23,16 @@ describe('Note API TEST ', () => {
         expect(note).to.have.property('description');
     });
 
+    it('GET /api/notes when no id specified' , async() => {
+        const response = await request(server).get('/api/notes');
+
+        expect(response.status).to.equal(500);
+
+        expect(response.body.error).to.be.an.instanceOf(Object);
+        expect(response.body.error).to.have.property('errorId');
+        expect(response.body.error).to.have.property('message');
+
+    })
+
 
 });
