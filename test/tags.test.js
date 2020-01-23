@@ -26,10 +26,26 @@ describe('Tags API TEST', () =>{
         expect(response.body.error.errorId).to.equal(0);
     });
 
+    /**
+     *
+     * @param length   - Size of the string to generate randomly
+     * @returns {string}
+     */
+
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+
     it('Post /api/tags - Create a new tag when the query is well based' , async () => {
         const tag = {
             idUser : 0,
-            textTag : 'TEST_TAG',
+            textTag : makeid(15),
             colorTag : 'F4F4F4'
         };
 
