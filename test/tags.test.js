@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const server = require('../src/app');
 const {describe} = require("mocha");
 const request = require('supertest');
-const Utils = require('Utils');
+const Utils = require('./Utils');
 
 describe('Tags API TEST', () =>{
 

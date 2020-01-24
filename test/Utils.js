@@ -1,6 +1,4 @@
-class Utils {
-    constructor() {
-    }
+module.exports = class Utils {
     /**
      *
      * @param length   - Size of the string to generate randomly
@@ -16,7 +14,3 @@ class Utils {
         return result;
     }
 }
-
-
-
-module.exports = Utils;
