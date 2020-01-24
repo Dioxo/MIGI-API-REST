@@ -7,27 +7,17 @@ function getNotes(idUser) {
         connection.query(sql, [idUser], async (err, result) =>{
             if (err)
                 reject (err);
-            //return result data
 
+            try{
+                //look to tags associates to each note
+                let tagsPromises = result.map( value => getTags(idUser, value.id_note)  );
+                let tags = await Promise.all(tagsPromises);
 
-            for (let i = 0 ; i < result.length ; i++){
-                result[i].tags = [];
-                //try to insert each tag to the note they belong to
-                try{
-                    let data = await getTags(idUser, result[i].id_note );
+                for(let i = 0; i < result.length ; i++)
+                    result[i].tags = tags[i];
 
-                    let tags = [];
-                    data.forEach( row  =>{
-                        tags.push({
-                            text_tag : row.text_tag,
-                            color_tag : row.color_tag
-                        });
-                    });
-
-                    result[i].tags = tags;
-                }catch (e) {
-                    reject(e);
-                }
+            }catch (e) {
+                reject(e);
             }
 
             resolve(result);

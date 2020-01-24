@@ -24,7 +24,6 @@ describe('Note API TEST ', () => {
         expect(note).to.have.property('tags');
         expect(note.tags).to.be.an.instanceOf(Array);
 
-        console.log(note);
         const tags = note.tags[0];
         expect(tags).to.have.property('text_tag');
         expect(tags).to.have.property('color_tag');
