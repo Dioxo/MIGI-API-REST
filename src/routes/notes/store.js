@@ -39,6 +39,20 @@ function getTags(idUser, idNote){
     })  ;
 }
 
+function createNote(note){
+    return new Promise((resolve, reject) => {
+       const sql = 'INSERT INTO note (id_user,title,description) VALUES (?,?,?)';
+       connection.query(sql, [note.id_user, note.title, note.description], (err, data) => {
+          if (err)
+              reject(err);
+
+          note.id_note = data.insertId;
+          resolve(note);
+       });
+    });
+}
+
 module.exports = {
     getNotes,
+    createNote,
 };
