@@ -44,7 +44,7 @@ router.post('/', async(req,res) => {
 router.delete('/', async (req, res) => {
     if (!req.body.hasOwnProperty('idUser') ||
         !req.body.hasOwnProperty('idNote'))
-        response.error(res, errors[0]);
+        return response.error(res, errors[0]);
 
     let note = {
         idUser : req.body.idUser,
