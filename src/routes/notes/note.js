@@ -67,7 +67,7 @@ router.delete('/', async (req, res) => {
 
 });
 
-router.patch('/' , async (req,res) => {
+router.patch('/removeTag' , async (req,res) => {
     if (!req.body.hasOwnProperty('id_user') ||
         !req.body.hasOwnProperty('id_note') ||
         !req.body.hasOwnProperty('text_tag') )

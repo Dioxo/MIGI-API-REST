@@ -92,7 +92,7 @@ describe('Note API TEST ', () => {
 
     it('PATCH /api/notes | Delete tag from note' , async  () =>{
         const response = await request(server).
-        patch('/api/notes')
+        patch('/api/notes/removeTag')
             .send({
                 id_user : 0,
                 id_note : 1,
