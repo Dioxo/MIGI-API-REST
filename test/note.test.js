@@ -71,13 +71,23 @@ describe('Note API TEST ', () => {
 
     it('DELETE /api/notes | idUser, idNote -DELETE NOTE WHEN idNote doesn\'t exist' , async() =>{
         const response = await request(server)
-                                .delete('/api/notes')
-                                .send({
-                                    idUser : 0,
-                                    idNote : -1
-                                });
+            .delete('/api/notes')
+            .send({
+                idUser : 0,
+                idNote : -1
+            });
 
         expect(response.status).to.equal(404);
+    });
+
+    it('DELETE /api/notes | DELETE NOTE but not all arguments were given' , async() =>{
+        const response = await request(server)
+            .delete('/api/notes')
+            .send({
+                idNote : -1
+            });
+
+        expect(response.status).to.equal(500);
     });
 
 
