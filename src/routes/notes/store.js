@@ -52,7 +52,22 @@ function createNote(note){
     });
 }
 
+function deleteNote(note){
+    return new Promise((resolve, reject) => {
+        const sql = 'DELETE FROM  note WHERE id_note= ? AND id_user= ?';
+        connection.query(sql, [note.idNote, note.idUser], (err, data) => {
+           if (err)
+               reject(err);
+
+           resolve(data.affectedRows);
+
+        });
+
+    });
+}
+
 module.exports = {
     getNotes,
     createNote,
+    deleteNote,
 };

@@ -41,5 +41,27 @@ router.post('/', async(req,res) => {
 });
 
 
+router.delete('/', async (req, res) => {
+    let note = {
+        idUser : req.body.idUser,
+        idNote : req.body.idNote
+    };
+
+    try{
+        let result = await store.deleteNote(note);
+
+        if (result === 0){
+            response.success(res, '', 404);
+        }else{
+            response.success(res, '', 200);
+        }
+
+
+    }catch (e) {
+        debug(e);
+    }
+
+});
+
 
 module.exports = router;

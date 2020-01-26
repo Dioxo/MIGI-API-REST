@@ -66,7 +66,19 @@ describe('Note API TEST ', () => {
         expect(response.body.error).has.property('message');
         expect(response.body.error).has.property('errorId');
         expect(response.body.error.errorId).to.equal(0);
-    })
+    });
+
+
+    it('DELETE /api/notes | idUser, idNote -DELETE NOTE WHEN idNote doesn\'t exist' , async() =>{
+        const response = await request(server)
+                                .delete('/api/notes')
+                                .send({
+                                    idUser : 0,
+                                    idNote : -1
+                                });
+
+        expect(response.status).to.equal(404);
+    });
 
 
 });
