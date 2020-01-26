@@ -67,5 +67,28 @@ router.delete('/', async (req, res) => {
 
 });
 
+router.patch('/' , async (req,res) => {
+    if (!req.body.hasOwnProperty('id_user') ||
+        !req.body.hasOwnProperty('id_note') ||
+        !req.body.hasOwnProperty('text_tag') )
+        return response.error(res, errors[0]);
+
+    let note = {
+        id_user : req.body.id_user,
+        id_note : req.body.id_note,
+        text_tag : req.body.text_tag
+    };
+    try {
+        let result = await store.deleteTagFromNote(note);
+
+        // remove unnecessary properties
+        delete result.text_tag;
+        delete result.id_user;
+        response.success(res, result);
+    }catch (e) {
+        debug(e);
+    }
+});
+
 
 module.exports = router;

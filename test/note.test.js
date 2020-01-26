@@ -90,5 +90,33 @@ describe('Note API TEST ', () => {
         expect(response.status).to.equal(500);
     });
 
+    it('PATCH /api/notes | Delete tag from note' , async  () =>{
+        const response = await request(server).
+        patch('/api/notes')
+            .send({
+                id_user : 0,
+                id_note : 1,
+                text_tag : 'test tag example'
+            });
+
+        expect(response.status).to.equal(200);
+
+        const note = response.body.body;
+
+        expect(note).to.be.an.instanceOf(Object);
+        expect(note).to.have.property('id_note');
+        expect(note).to.have.property('tags');
+        expect(note.tags).to.be.an.instanceOf(Array);
+
+        if (note.tags.length > 0 ){
+            const tag = note.tags[0];
+
+            expect(tag).to.have.property('text_tag');
+            expect(tag).to.have.property('color_tag');
+        }
+    });
+
+
+
 
 });

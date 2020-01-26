@@ -66,8 +66,31 @@ function deleteNote(note){
     });
 }
 
+function deleteTagFromNote(note){
+    return new Promise((resolve, reject) => {
+       const sql = "delete from note_tag where id_user = ? and id_note = ? and " +
+                        "id_tag = (SELECT id_tag from tag where text_tag = ?)";
+
+       connection.query(sql, [note.id_user, note.id_note, note.text_tag], async (err, data ) => {
+          if (err)
+              reject(err);
+
+          try{
+               //look tags associates to note
+               note.tags = await getTags(note.id_user, note.id_note);
+          }catch (e) {
+               reject(e);
+          }
+
+          resolve(note);
+       });
+
+    });
+}
+
 module.exports = {
     getNotes,
     createNote,
     deleteNote,
+    deleteTagFromNote,
 };
