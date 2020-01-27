@@ -127,5 +127,18 @@ describe('Note API TEST ', () => {
         expect(user).to.have.property('nickname');
     });
 
+    it('PATCH update note', async ()=>{
+        const response = await request(server)
+                                .patch('/api/notes')
+                                .send({
+                                    id_user : 0,
+                                    id_note : 1,
+                                    title : Utils.makeid(10),
+                                    description : Utils.makeid(50),
+                                });
+
+        expect(response.status).to.equal(200);
+    });
+
 
 });

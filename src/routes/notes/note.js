@@ -90,5 +90,23 @@ router.patch('/removeTag' , async (req,res) => {
     }
 });
 
+router.patch('/', async (req, res ) =>{
+    if (!req.body.hasOwnProperty('id_user') ||
+        !req.body.hasOwnProperty('id_note') ||
+        !req.body.hasOwnProperty('title') ||
+        !req.body.hasOwnProperty('description') )
+        return response.error(res, errors[0]);
+
+    let note = {
+        idUser : req.body.id_user,
+        idNote : req.body.id_note,
+        title : req.body.title,
+        description : req.body.description,
+    };
+
+    let result = await store.updateNote(note);
+    response.success(res, '');
+});
+
 
 module.exports = router;

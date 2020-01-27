@@ -88,9 +88,22 @@ function deleteTagFromNote(note){
     });
 }
 
+function updateNote(note){
+    return new Promise((resolve, reject) => {
+        const sql = 'UPDATE  note SET title= ? , description= ?  WHERE id_note= ? AND id_user = ?';
+        connection.query(sql, [note.title, note.description  , note.idNote , note.idUser] , (err, data ) =>{
+           if (err)
+               reject(err);
+
+           resolve(data.affectedRows);
+        });
+    })
+}
+
 module.exports = {
     getNotes,
     createNote,
     deleteNote,
     deleteTagFromNote,
+    updateNote,
 };
