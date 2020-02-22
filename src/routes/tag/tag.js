@@ -26,6 +26,11 @@ router.get('/:idUser', async (req, res) =>{
     response.success(res, tag);
 });
 
+router.get('/:idUser/countTags', async (req, res) =>{
+    let tagsUses = await store.countTags(req.params.idUser);
+    response.success(res, tagsUses);
+});
+
 router.post('/', async (req, res, next) => {
     if ( ! (req.body.hasOwnProperty('idUser'))  ||
         ! (req.body.hasOwnProperty('textTag')) ||

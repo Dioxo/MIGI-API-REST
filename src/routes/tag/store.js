@@ -41,8 +41,24 @@ function getTag(userData){
     });
 }
 
+function countTags(idUser){
+    return new Promise((resolve, reject) => {
+       const sql = 'select text_tag, count(id_note) as count_tag ' +
+                            'from note_tag NATURAL RIGHT JOIN tag ' +
+                            'where id_user =0 GROUP BY id_tag ORDER BY text_tag ASC';
+
+       connection.query(sql, [idUser] , (err, data) =>{
+          if (err)
+              reject(err);
+
+          resolve(data);
+       });
+    });
+}
+
 module.exports = {
     getTags,
     createTag,
     getTag,
+    countTags,
 };

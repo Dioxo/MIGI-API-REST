@@ -57,6 +57,18 @@ describe('Tags API TEST', () =>{
         console.log(tag);
     });
 
+    it('Get /api/tags/:idUser/countTags return the number of notes that associates a tag' , async () =>{
+       const response = await request(server).get('/api/tags/0/countTags');
+
+       expect(response.status).to.equal(200);
+
+       let tagsUses = response.body.body;
+
+       expect(tagsUses).to.be.an.instanceOf(Array);
+
+       expect(tagsUses[0]).to.have.all.keys('text_tag','count_tag');
+    });
+
 });
 
 
