@@ -47,14 +47,21 @@ describe('Tags API TEST', () =>{
 
     it('Get /api/tags/:idUser?textTag return the id of a tag based on its text  ', async() =>{
 
-       const response = await request(server).get('/api/tags/0?textTag=xgxOduSO6dvQDqK');
+        const response = await request(server).get('/api/tags/0?textTag=xgxOduSO6dvQDqK');
 
-       expect(response.status).to.equal(200);
+        expect(response.status).to.equal(200);
 
-       const tag = response.body.body;
+        const tag = response.body.body;
 
         expect(tag).to.be.an.instanceOf(Object);
         console.log(tag);
+    });
+
+    it('Get /api/tags/:idUser?textTag QUERY IS NOT WELL FORMED ', async() =>{
+
+        const response = await request(server).get('/api/tags/0');
+
+        expect(response.status).to.equal(500);
     });
 
     it('Get /api/tags/:idUser/countTags return the number of notes that associates a tag' , async () =>{

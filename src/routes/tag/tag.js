@@ -17,6 +17,10 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/:idUser', async (req, res) =>{
+    if (!req.query.hasOwnProperty('textTag')){
+        return response.error(res, errors[0]);
+    }
+
     let userData = {
         idUser : req.params.idUser,
         textTag : req.query.textTag
