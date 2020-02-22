@@ -10,13 +10,6 @@ function getTags(idUser) {
             //return result data
             resolve(result);
         })
-    }). then(rows => {
-        //return all the rows from the query
-        return rows;
-    }).catch( (err) => {
-        //error handling...
-        debug(err);
-        return [];
     });
 }
 
@@ -32,12 +25,7 @@ function createTag(tag){
             tag.idTag = result.insertId;
             resolve(tag);
         })
-    }).then(data => {
-        return data;
-    }).catch(reason => {
-        debug(reason);
-        return {};
-    })
+    });
 }
 
 function getTag(userData){
