@@ -6,31 +6,24 @@ const errors = require('../../errors');
 const store = require('./store');
 const debug =require('debug')('server:debug');
 
-router.get('/' , async (req, res) => {
-    if (req.query.hasOwnProperty('idUser')){
-        try {
-            let result = await store.getNotes(req.query.idUser);
-            response.success(res, result);
-        }catch (err) {
-            debug(err);
-        }
-    }else{
-        response.error(res, errors[0]);
+router.get('/:idUser' , async (req, res) => {
+    try {
+        let result = await store.getNotes(req.params.idUser);
+        response.success(res, result);
+    }catch (err) {
+        debug(err);
     }
-
-
 
 });
 
 
-router.post('/', async(req,res) => {
-    if (!req.body.hasOwnProperty('id_user') ||
-        !req.body.hasOwnProperty('description') ||
+router.post('/:idUser', async(req,res) => {
+    if (!req.body.hasOwnProperty('description') ||
         !req.body.hasOwnProperty('title') )
         return response.error(res,errors[0]);
 
     let note = {
-        id_user : req.body.id_user,
+        id_user : req.params.idUser,
         title : req.body.title,
         description : req.body.description,
     };
@@ -41,13 +34,12 @@ router.post('/', async(req,res) => {
 });
 
 
-router.delete('/', async (req, res) => {
-    if (!req.body.hasOwnProperty('idUser') ||
-        !req.body.hasOwnProperty('idNote'))
+router.delete('/:idUser', async (req, res) => {
+    if ( !req.body.hasOwnProperty('idNote'))
         return response.error(res, errors[0]);
 
     let note = {
-        idUser : req.body.idUser,
+        idUser : req.params.idUser,
         idNote : req.body.idNote
     };
 
@@ -67,14 +59,13 @@ router.delete('/', async (req, res) => {
 
 });
 
-router.patch('/removeTag' , async (req,res) => {
-    if (!req.body.hasOwnProperty('id_user') ||
-        !req.body.hasOwnProperty('id_note') ||
+router.patch('/:idUser/removeTag' , async (req,res) => {
+    if (!req.body.hasOwnProperty('id_note') ||
         !req.body.hasOwnProperty('text_tag') )
         return response.error(res, errors[0]);
 
     let note = {
-        id_user : req.body.id_user,
+        id_user : req.params.idUser,
         id_note : req.body.id_note,
         text_tag : req.body.text_tag
     };

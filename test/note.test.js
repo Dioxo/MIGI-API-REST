@@ -7,8 +7,8 @@ const Utils = require('./Utils');
 
 describe('Note API TEST ', () => {
 
-    it('GET /api/notes?idUser get all notes from a user' , async () => {
-        const response = await request(server).get('/api/notes?idUser=0');
+    it('GET /api/notes/:idUser get all notes from a user' , async () => {
+        const response = await request(server).get('/api/notes/0');
 
         expect(response.status).to.equal(200);
 
@@ -29,26 +29,14 @@ describe('Note API TEST ', () => {
         expect(tags).to.have.property('color_tag');
     });
 
-    it('GET /api/notes when no id specified' , async() => {
-        const response = await request(server).get('/api/notes');
 
-        expect(response.status).to.equal(500);
-
-        expect(response.body.error).to.be.an.instanceOf(Object);
-        expect(response.body.error).to.have.property('errorId');
-        expect(response.body.error).to.have.property('message');
-
-    });
-
-
-    it('POST /api/notes?idUser,title,description - Create a Tag' , async () =>{
+    it('POST /api/notes/:idUser?title,description - Create a Tag' , async () =>{
         const noteSend = {
-            id_user : 0,
             title : Utils.makeid(50),
             description : Utils.makeid(10)
         };
 
-        const response = await request(server).post('/api/notes').send(noteSend);
+        const response = await request(server).post('/api/notes/0').send(noteSend);
 
         expect(response.status).to.equal(200);
         const note = response.body.body;
@@ -58,8 +46,8 @@ describe('Note API TEST ', () => {
         expect(note).to.have.property('description');
     });
 
-    it('POST /api/notes - Create a Tag bad-formed', async() => {
-        const response = await request(server).post('/api/notes').send({});
+    it('POST /api/notes/:idUser - Create a Tag bad-formed', async() => {
+        const response = await request(server).post('/api/notes/0').send({});
 
         expect(response.status).to.equal(500);
         expect(response.body.error).to.be.an.instanceOf(Object);
@@ -68,33 +56,10 @@ describe('Note API TEST ', () => {
         expect(response.body.error.errorId).to.equal(0);
     });
 
-
-    it('DELETE /api/notes | idUser, idNote -DELETE NOTE WHEN idNote doesn\'t exist' , async() =>{
-        const response = await request(server)
-            .delete('/api/notes')
-            .send({
-                idUser : 0,
-                idNote : -1
-            });
-
-        expect(response.status).to.equal(404);
-    });
-
-    it('DELETE /api/notes | DELETE NOTE but not all arguments were given' , async() =>{
-        const response = await request(server)
-            .delete('/api/notes')
-            .send({
-                idNote : -1
-            });
-
-        expect(response.status).to.equal(500);
-    });
-
-    it('PATCH /api/notes | Delete tag from note' , async  () =>{
+    it('PATCH /api/notes/:idUser | Delete tag from note' , async  () =>{
         const response = await request(server).
-        patch('/api/notes/removeTag')
+        patch('/api/notes/0/removeTag')
             .send({
-                id_user : 0,
                 id_note : 1,
                 text_tag : 'test tag example'
             });
@@ -116,15 +81,34 @@ describe('Note API TEST ', () => {
         }
     });
 
-    it('Get credentials from user to Nav Drawer', async function () {
-        const response =await request(server).get('/api/users?id_user=0');
+    it('DELETE /api/notes/:idUser | DELETE NOTE ' , async() =>{
+        // This function could generate problems if idNote doesn't exists...
+        // If test fails, see if idNote 1 still exists
+        const response = await request(server)
+            .delete('/api/notes/0')
+            .send({
+                idNote : 0
+            });
 
         expect(response.status).to.equal(200);
+    });
+    it('DELETE /api/notes/:idUser | idUser, idNote -DELETE NOTE WHEN idNote doesn\'t exist' , async() =>{
+        const response = await request(server)
+            .delete('/api/notes')
+            .send({
+                idUser : 0,
+                idNote : -1
+            });
 
-        const user = response.body.body;
+        expect(response.status).to.equal(404);
+    });
 
-        expect(user).to.have.property('email');
-        expect(user).to.have.property('nickname');
+    it('DELETE /api/notes:idUser | DELETE NOTE but not all arguments were given' , async() =>{
+        const response = await request(server)
+            .delete('/api/notes/0')
+            .send();
+
+        expect(response.status).to.equal(500);
     });
 
     it('PATCH update note', async ()=>{
