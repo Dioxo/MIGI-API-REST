@@ -40,7 +40,21 @@ function createTag(tag){
     })
 }
 
+function getTag(userData){
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT id_tag from tag where id_user = ? and text_tag = ?';
+
+        connection.query(sql, [userData.idUser, userData.textTag ] , (err, data) =>{
+           if (err)
+               reject( err);
+
+           resolve(data);
+        });
+    });
+}
+
 module.exports = {
     getTags,
     createTag,
+    getTag,
 };

@@ -16,6 +16,16 @@ router.get('/', async (req, res, next) => {
     response.success(res, result);
 });
 
+router.get('/:idUser', async (req, res) =>{
+    let userData = {
+        idUser : req.params.idUser,
+        textTag : req.query.textTag
+    };
+
+    let tag = await store.getTag(userData);
+    response.success(res, tag);
+});
+
 router.post('/', async (req, res, next) => {
     if ( ! (req.body.hasOwnProperty('idUser'))  ||
         ! (req.body.hasOwnProperty('textTag')) ||
