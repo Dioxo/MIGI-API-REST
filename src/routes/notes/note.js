@@ -96,7 +96,7 @@ router.patch('/', async (req, res ) =>{
     };
 
     let result = await store.updateNote(note);
-    response.success(res, '');
+    response.success(res, result);
 });
 
 
