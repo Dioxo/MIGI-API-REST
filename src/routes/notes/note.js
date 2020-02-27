@@ -6,7 +6,14 @@ const errors = require('../../errors');
 const store = require('./store');
 const debug =require('debug')('server:debug');
 
-router.get('/:idUser' , async (req, res) => {
+router.get('/:idUser' , async (req, res, next) => {
+
+    if (req.query.hasOwnProperty('title') &&
+        req.query.hasOwnProperty('description')){
+        //if these parameters are send, pass to next handler to get idNote
+        return next();
+    }
+
     try {
         let result = await store.getNotes(req.params.idUser);
         response.success(res, result);
@@ -14,6 +21,21 @@ router.get('/:idUser' , async (req, res) => {
         debug(err);
     }
 
+});
+
+/**
+ * Get idNote based on title and description
+ */
+
+router.get('/:idUser' , async (req, res) => {
+    let note = {
+        idUser : req.params.idUser,
+        title : req.query.title,
+        description : req.query.description,
+    };
+
+    let idNote = await store.getIdNote(note);
+    response.success(res,idNote[0]);
 });
 
 

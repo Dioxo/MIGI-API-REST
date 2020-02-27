@@ -125,4 +125,12 @@ describe('Note API TEST ', () => {
     });
 
 
+    it('GET /api/notes/:idUser?title & description' , async () => {
+        const response = await request(server).get('/api/notes/0?title=title&description=description');
+
+        expect(response.status).to.equal(200);
+
+        expect(response.body.body).to.be.instanceOf(Object);
+        expect(response.body.body).to.have.property('id_note');
+    });
 });

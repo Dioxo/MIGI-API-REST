@@ -9,6 +9,7 @@ var logger = require('morgan');
 var tagRouter = require('./routes/tag/tag');
 var noteRouter = require('./routes/notes/note');
 const userRouter = require('./routes/user/user');
+const revisionRouter = require('./routes/revision/revision');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/tags/', tagRouter);
 app.use('/api/notes/', noteRouter);
 app.use('/api/users/', userRouter);
+app.use('/api/revisions/', revisionRouter);
 
 const listen =app.listen(config.get('port'),()=>{
     debug(`server is running on port ${config.get('port')} and in ${config.get('name')} mode`);

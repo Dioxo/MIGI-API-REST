@@ -100,10 +100,24 @@ function updateNote(note){
     })
 }
 
+function getIdNote(note) {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT id_note  FROM note where title = ? and description = ? and id_user = ?';
+
+        connection.query(sql, [note.title, note.description, note.idUser], (err, data) => {
+           if (err)
+               reject(err);
+
+           resolve(data);
+        });
+    })
+}
+
 module.exports = {
     getNotes,
     createNote,
     deleteNote,
     deleteTagFromNote,
     updateNote,
+    getIdNote,
 };
