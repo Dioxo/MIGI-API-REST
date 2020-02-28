@@ -5,18 +5,12 @@ const errors = require('../../errors');
 const store = require('./store');
 
 
-router.get('/', async (req, res) => {
-    /*If there's no idUser in the query */
-    if (!req.query.idUser){
-        return response.error(res, errors[0]);
-    }
-
-    let result = await store.getTags(req.query.idUser);
-
+router.get('/:idUser', async (req, res) => {
+    let result = await store.getTags(req.params.idUser);
     response.success(res, result);
 });
 
-router.get('/:idUser', async (req, res) =>{
+router.get('/:idUser/text', async (req, res) =>{
     if (!req.query.hasOwnProperty('textTag')){
         return response.error(res, errors[0]);
     }
