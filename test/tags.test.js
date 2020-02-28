@@ -76,6 +76,19 @@ describe('Tags API TEST', () =>{
        expect(tagsUses[0]).to.have.all.keys('text_tag','count_tag');
     });
 
+    it('PUT /api/tags/:idUser/:idNote?textTag | Add tag to note',async  function () {
+        const response = await request(server)
+                                            .put('/api/tags/0/1')
+                                            .send({
+                                                textTag : Utils.makeid(10)
+                                                });
+
+        expect(response.status).to.equal(200);
+
+        expect(response.body.error).to.equal('');
+        expect(response.body.body).to.equal('');
+    });
+
 });
 
 

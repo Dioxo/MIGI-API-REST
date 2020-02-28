@@ -5,7 +5,7 @@ const errors = require('../../errors');
 const store = require('./store');
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     /*If there's no idUser in the query */
     if (!req.query.idUser){
         return response.error(res, errors[0]);
@@ -35,7 +35,7 @@ router.get('/:idUser/countTags', async (req, res) =>{
     response.success(res, tagsUses);
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', async (req, res) => {
     if ( ! (req.body.hasOwnProperty('idUser'))  ||
         ! (req.body.hasOwnProperty('textTag')) ||
         ! (req.body.hasOwnProperty('colorTag')) ){
@@ -52,6 +52,16 @@ router.post('/', async (req, res, next) => {
 
     response.success(res, result)
 
+});
+
+router.put('/:idUser/:idNote', async (req, res) =>{
+    const info = {
+        idUser : req.params.idUser,
+        idNote : req.params.idNote,
+        textTag : req.body.textTag
+    };
+    await store.addTagToNote(info);
+    response.success(res, '');
 });
 
 module.exports = router;

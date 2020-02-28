@@ -1,4 +1,3 @@
-const debug =require('debug')('server:debug');
 const connection = require('../../db_connect');
 
 function getTags(idUser) {
@@ -56,9 +55,23 @@ function countTags(idUser){
     });
 }
 
+function addTagToNote(info){
+    return new Promise((resolve, reject) => {
+       const sql = 'CALL addTagToNote(?,?,?)';
+
+       connection.query(sql, [info.idUser, info.idNote, info.textTag], err => {
+           if (err)
+               reject(err);
+
+           resolve();
+       })
+    });
+}
+
 module.exports = {
     getTags,
     createTag,
     getTag,
     countTags,
+    addTagToNote,
 };
