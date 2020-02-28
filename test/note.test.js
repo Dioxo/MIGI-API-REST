@@ -133,4 +133,15 @@ describe('Note API TEST ', () => {
         expect(response.body.body).to.be.instanceOf(Object);
         expect(response.body.body).to.have.property('id_note');
     });
+
+    it('GET /api/notes/:idUser/tags | get all notes that contains a certain tag', async function () {
+        const response = await request(server).get('/api/notes/0/tags?textTag=TEST_TAG');
+
+        expect(response.status).to.equal(200);
+
+        const notes = response.body.body;
+        expect(notes).to.be.instanceOf(Array);
+
+        expect(notes[0]).to.have.keys('id_note' , 'id_user', 'title', 'description', 'tags','have_revision')
+    });
 });

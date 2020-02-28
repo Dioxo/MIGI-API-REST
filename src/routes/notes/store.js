@@ -113,6 +113,33 @@ function getIdNote(note) {
     })
 }
 
+function getNotesBasedOn(args){
+    return new Promise((resolve, reject) => {
+       const sql = 'select distinct * from note ' +
+                    'where id_note in ' +
+                        '(select id_note from note_tag natural join tag where text_tag = ? ) and id_user = ? ';
+
+       connection.query(sql, [args.textTag, args.idUser], async (err, result) =>{
+           if (err)
+               reject(err);
+
+           try{
+               //look to tags associates to each note
+               let tagsPromises = result.map( value => getTags(args.idUser, value.id_note)  );
+               let tags = await Promise.all(tagsPromises);
+
+               for(let i = 0; i < result.length ; i++)
+                   result[i].tags = tags[i];
+
+           }catch (e) {
+               reject(e);
+           }
+
+           resolve(result);
+       })
+    });
+}
+
 module.exports = {
     getNotes,
     createNote,
@@ -121,4 +148,5 @@ module.exports = {
     updateNote,
     getIdNote,
     getTags,
+    getNotesBasedOn,
 };

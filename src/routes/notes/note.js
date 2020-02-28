@@ -121,5 +121,13 @@ router.patch('/', async (req, res ) =>{
     response.success(res, result);
 });
 
+router.get('/:idUser/tags',  async (req, res) =>{
+    const args = {
+      idUser : req.params.idUser,
+      textTag : req.query.textTag,
+    };
+    const notes =  await store.getNotesBasedOn( args );
 
+    response.success(res, notes);
+});
 module.exports = router;
