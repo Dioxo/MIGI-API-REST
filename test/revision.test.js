@@ -10,7 +10,7 @@ describe('revision Suit' , () =>{
                                             .put('/api/revisions/0/')
                                             .send({
                                                 idNote : 1,
-                                                q : 5
+                                                q : 1
                                             });
 
         expect(response.body.body).to.equal('');
