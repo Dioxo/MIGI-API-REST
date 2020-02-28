@@ -3,7 +3,6 @@ const router = express.Router();
 
 const response = require('../../response');
 const store = require('./store');
-const debug =require('debug')('server:debug');
 
 router.get('/:idUser',  async (req,res ) => {
 
@@ -13,13 +12,8 @@ router.get('/:idUser',  async (req,res ) => {
         q : req.query.q
     };
 
-    try{
-        await store.addRevision(info);
-        response.success(res, '');
-    }catch (e) {
-        console.log(e);
-        debug(e);
-    }
+    await store.addRevision(info);
+    response.success(res, '');
 
 });
 
