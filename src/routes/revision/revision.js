@@ -18,4 +18,9 @@ router.put('/:idUser',  async (req,res ) => {
 });
 
 
+router.get('/:idUser/today',async (req,res) => {
+    let notes = await store.getTodayRevisionNotes(req.params.idUser);
+    response.success(res, notes);
+});
+
 module.exports = router;

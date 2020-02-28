@@ -120,4 +120,5 @@ module.exports = {
     deleteTagFromNote,
     updateNote,
     getIdNote,
+    getTags,
 };

@@ -4,3 +4,4 @@ config/
 dist/
 #ignore node_modules
 node_modules/
+/.idea/dictionaries/dioxo.xml
