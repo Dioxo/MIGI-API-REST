@@ -5,8 +5,13 @@ const request = require('supertest');
 
 describe('revision Suit' , () =>{
 
-    it('GET /api/revision/:idUser', async function () {
-        const response = await request(server).get('/api/revisions/0?idNote=1&q=5');
+    it('PUT /api/revision/:idUser | Create a revision', async function () {
+        const response = await request(server)
+                                            .put('/api/revisions/0/')
+                                            .send({
+                                                idNote : 1,
+                                                q : 5
+                                            });
 
         expect(response.body.body).to.equal('');
         expect(response.body.error).to.equal('');
