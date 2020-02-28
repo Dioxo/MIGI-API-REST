@@ -71,7 +71,7 @@ function deleteTagFromNote(note){
        const sql = "delete from note_tag where id_user = ? and id_note = ? and " +
                         "id_tag = (SELECT id_tag from tag where text_tag = ?)";
 
-       connection.query(sql, [note.id_user, note.id_note, note.text_tag], async (err, data ) => {
+       connection.query(sql, [note.id_user, note.id_note, note.text_tag], async err => {
           if (err)
               reject(err);
 
