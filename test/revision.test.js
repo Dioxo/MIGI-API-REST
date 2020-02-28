@@ -5,7 +5,7 @@ const request = require('supertest');
 
 describe('revision Suit' , () =>{
 
-    it('GET /api/revision/', async function () {
+    it('GET /api/revision/:idUser', async function () {
         const response = await request(server).get('/api/revisions/0?idNote=1&q=5');
 
         expect(response.body.body).to.equal('');
