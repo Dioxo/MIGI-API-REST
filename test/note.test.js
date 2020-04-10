@@ -30,7 +30,7 @@ describe('Note API TEST ', () => {
     });
 
 
-    it('POST /api/notes/:idUser?title,description - Create a Tag' , async () =>{
+    it('POST /api/notes/:idUser?title,description - Create a Note' , async () =>{
         const noteSend = {
             title : Utils.makeid(50),
             description : Utils.makeid(10)
@@ -46,7 +46,7 @@ describe('Note API TEST ', () => {
         expect(note).to.have.property('description');
     });
 
-    it('POST /api/notes/:idUser - Create a Tag bad-formed', async() => {
+        it('POST /api/notes/:idUser - Create a Note bad-formed', async() => {
         const response = await request(server).post('/api/notes/0').send({});
 
         expect(response.status).to.equal(500);
@@ -113,9 +113,8 @@ describe('Note API TEST ', () => {
 
     it('PATCH update note', async ()=>{
         const response = await request(server)
-                                .patch('/api/notes')
+                                .patch('/api/notes/0')
                                 .send({
-                                    id_user : 0,
                                     id_note : 1,
                                     title : Utils.makeid(10),
                                     description : Utils.makeid(50),

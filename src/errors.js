@@ -1,7 +1,8 @@
 /**
  * All the different errors that may appear in the application
- * and should be handled
- * */
+ * @module errors
+ * @type {{errorId: number, message: string}}
+ */
 module.exports = [
     {
         errorId: 0,

@@ -5,12 +5,14 @@ const express = require('express');
 const store = require('./store');
 
 const router = express.Router();
-router.get('/', async (req,res) => {
-    if (!req.query.hasOwnProperty('id_user'))
-        return response.error(res, errors[0]);
 
+/**
+ * @function GET /api/user/:idUser
+ * @description Get user's credentials
+ */
+router.get('/:idUser', async (req,res) => {
     try{
-        let idUser = req.query.id_user;
+        let idUser = req.params.idUser;
         const result = await store.getCredentials_NavDrawe(idUser);
 
         response.success(res, result);
@@ -19,4 +21,9 @@ router.get('/', async (req,res) => {
     }
 });
 
+/**
+ * Router that handles user's actions
+ * @module user
+ * @type {Router}
+ */
 module.exports = router;

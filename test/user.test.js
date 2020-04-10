@@ -8,7 +8,7 @@ const Utils = require('./Utils');
 describe('USER API TEST ', () => {
 
     it('Get credentials from user to Nav Drawer', async function () {
-        const response =await request(server).get('/api/users?id_user=0');
+        const response =await request(server).get('/api/users/0');
 
         expect(response.status).to.equal(200);
 

@@ -6,6 +6,13 @@ const errors = require('../../errors');
 const store = require('./store');
 const debug =require('debug')('server:debug');
 
+/**
+ * @function GET /api/note/:idUser
+ * @description Get all notes from user by idUser </br>
+ * Params to send in the request's query:
+ * title, description </br>
+ * If title and description are passed on, see next router
+ */
 router.get('/:idUser' , async (req, res, next) => {
 
     if (req.query.hasOwnProperty('title') &&
@@ -24,9 +31,11 @@ router.get('/:idUser' , async (req, res, next) => {
 });
 
 /**
- * Get idNote based on title and description
- */
-
+ * @function GET /api/note/:idUser?title,description
+ * @description Get idNote based on title and description
+ * Params to send in the request's query:
+ * title,description
+ * */
 router.get('/:idUser' , async (req, res) => {
     let note = {
         idUser : req.params.idUser,
@@ -38,7 +47,12 @@ router.get('/:idUser' , async (req, res) => {
     response.success(res,idNote[0]);
 });
 
-
+/**
+ * @function POST /api/notes/:idUser
+ * @description Create a Note
+ * Params to send in the request's body:
+ * description, title
+ * */
 router.post('/:idUser', async(req,res) => {
     if (!req.body.hasOwnProperty('description') ||
         !req.body.hasOwnProperty('title') )
@@ -56,6 +70,12 @@ router.post('/:idUser', async(req,res) => {
 });
 
 
+/**
+ * @function DELETE /api/note/:idUser?idNote
+ * @description Delete Note
+ * Params to send in the request's body:
+ * idNote
+ * */
 router.delete('/:idUser', async (req, res) => {
     if ( !req.body.hasOwnProperty('idNote'))
         return response.error(res, errors[0]);
@@ -82,6 +102,12 @@ router.delete('/:idUser', async (req, res) => {
 
 });
 
+/**
+ * @function PATCH /api/notes/:idUser?id_note,text_tag
+ * @description Delete tag from note
+ * Params to send in the request's body:
+ * id_note, text_tag
+ * */
 router.patch('/:idUser/removeTag' , async (req,res) => {
     if (!req.body.hasOwnProperty('id_note') ||
         !req.body.hasOwnProperty('text_tag') )
@@ -104,9 +130,14 @@ router.patch('/:idUser/removeTag' , async (req,res) => {
     }
 });
 
-router.patch('/', async (req, res ) =>{
-    if (!req.body.hasOwnProperty('id_user') ||
-        !req.body.hasOwnProperty('id_note') ||
+/**
+ * @function PATCH /api/note/:idUser?
+ * @description Update note
+ * Params to send in the request's body:
+ * id_note, title, description
+ * */
+router.patch('/:idUser', async (req, res ) =>{
+    if (!req.body.hasOwnProperty('id_note') ||
         !req.body.hasOwnProperty('title') ||
         !req.body.hasOwnProperty('description') )
         return response.error(res, errors[0]);
@@ -122,7 +153,16 @@ router.patch('/', async (req, res ) =>{
     response.success(res, result);
 });
 
+/**
+ * @function GET /api/note/:idUser/tags
+ * @description Get all notes that contains a certain tag
+ * Params to send in the request's query:
+ * textTag
+ * */
 router.get('/:idUser/tags',  async (req, res) =>{
+    if (!req.query.hasOwnProperty('textTag') )
+        return response.error(res, errors[0]);
+
     const args = {
       idUser : req.params.idUser,
       textTag : req.query.textTag,
@@ -131,4 +171,10 @@ router.get('/:idUser/tags',  async (req, res) =>{
 
     response.success(res, notes);
 });
+
+/**
+ * Router that handles all note's actions
+ * @module note
+ * @type {Router}
+ */
 module.exports = router;

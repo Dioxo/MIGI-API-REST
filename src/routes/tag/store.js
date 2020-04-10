@@ -1,5 +1,5 @@
 const connection = require('../../db_connect');
-const DB = require ('../DB');
+const DB = require ('../../DB');
 let database = new DB();
 
 function getTags(idUser) {
