@@ -2,6 +2,8 @@
 config/
 #ignore dist
 dist/
+#ignore documentation
+out/
 #ignore node_modules
 node_modules/
 /.idea/dictionaries/dioxo.xml
