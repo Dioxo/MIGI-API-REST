@@ -142,6 +142,7 @@ describe('Note API TEST ', () => {
         const notes = response.body.body;
         expect(notes).to.be.instanceOf(Array);
 
-        expect(notes[0]).to.have.keys('id_note' , 'id_user', 'title', 'description', 'tags','have_revision')
+        if (notes.length > 0)
+            expect(notes[0]).to.have.keys('id_note' , 'id_user', 'title', 'description', 'tags','have_revision')
     });
 });

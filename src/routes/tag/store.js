@@ -1,4 +1,6 @@
 const connection = require('../../db_connect');
+const DB = require ('../DB');
+let database = new DB();
 
 function getTags(idUser) {
     return new Promise((resolve, reject) => {
@@ -41,18 +43,10 @@ function getTag(userData){
 }
 
 function countTags(idUser){
-    return new Promise((resolve, reject) => {
-       const sql = 'select text_tag, count(id_note) as count_tag ' +
-                            'from note_tag NATURAL RIGHT JOIN tag ' +
-                            'where id_user =0 GROUP BY id_tag ORDER BY text_tag ASC';
-
-       connection.query(sql, [idUser] , (err, data) =>{
-          if (err)
-              reject(err);
-
-          resolve(data);
-       });
-    });
+    const sql = 'select text_tag, count(id_note) as count_tag ' +
+        'from note_tag NATURAL RIGHT JOIN tag ' +
+        'WHERE id_user = 0 GROUP BY (text_tag)  ORDER BY text_tag ASC;';
+    return database.query(sql, [idUser]);
 }
 
 function addTagToNote(info){

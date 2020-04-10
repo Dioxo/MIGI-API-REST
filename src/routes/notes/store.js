@@ -57,7 +57,7 @@ function deleteNote(note){
         const sql = 'DELETE FROM  note WHERE id_note= ? AND id_user= ?';
         connection.query(sql, [note.idNote, note.idUser], (err, data) => {
            if (err)
-               reject(err);
+               return reject(err);
 
            resolve(data.affectedRows);
 

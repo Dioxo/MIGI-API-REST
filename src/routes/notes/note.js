@@ -77,6 +77,7 @@ router.delete('/:idUser', async (req, res) => {
 
     }catch (e) {
         debug(e);
+        response.error(res, '',404);
     }
 
 });

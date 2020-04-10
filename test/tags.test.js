@@ -36,14 +36,14 @@ describe('Tags API TEST', () =>{
 
     it('Get /api/tags/:idUser/text?textTag return the id of a tag based on its text  ', async() =>{
 
-        const response = await request(server).get('/api/tags/0/text?textTag=xgxOduSO6dvQDqK');
+        const response = await request(server).get('/api/tags/0/text?textTag=TEST_TAG');
 
         expect(response.status).to.equal(200);
 
         const tag = response.body.body;
 
         expect(tag).to.be.an.instanceOf(Object);
-        expect(tag[0].id_tag).to.equal(24);
+        expect(tag[0].id_tag).to.equal(18);
     });
 
     it('Get /api/tags/:idUser/text?textTag QUERY IS NOT WELL FORMED ', async() =>{

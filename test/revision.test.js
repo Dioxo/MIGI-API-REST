@@ -9,7 +9,7 @@ describe('revision Suit' , () =>{
         const response = await request(server)
                                             .put('/api/revisions/0/')
                                             .send({
-                                                idNote : 1,
+                                                idNote : 3,
                                                 q : 1
                                             });
 

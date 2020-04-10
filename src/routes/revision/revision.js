@@ -12,8 +12,12 @@ router.put('/:idUser',  async (req,res ) => {
         q : req.body.q
     };
 
-    await store.addRevision(info);
-    response.success(res, '');
+    try {
+        await store.addRevision(info);
+        response.success(res, '');
+    }catch (e) {
+        response.error(res, '');
+    }
 
 });
 
